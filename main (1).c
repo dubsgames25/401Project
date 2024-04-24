@@ -36,11 +36,13 @@ typedef struct hand_s {
 void addNewNodeToBeginning(card ** head, card temp) {
     card * new_node;   //temp card
     new_node = (card *)malloc(sizeof(card));   //allocates memory for new card node
+    if(new_node!=NULL){ //Fix for warning: deference of possibly-NULL
     new_node->value = temp.value;
     strcpy(new_node->action, temp.action);   //copy data
     strcpy(new_node->color, temp.color);
     new_node->pt = *head;
     *head = new_node;
+    }
 }
 
 //adds card to the end of the linked list; takes linked list and a card as input, no output necessary
@@ -49,10 +51,12 @@ void addNewNodeToEnd(card * head, card temp) {
     while (current->pt != NULL)
         current = current->pt;
     current->pt = (card *) malloc(sizeof(card));   //allocates memory for new card node
+    if(current->pt != NULL){  //Fix for warning: dereference of possibly-NULL
     current->pt->value = temp.value;
     strcpy(current->pt->action, temp.action);   //copy data
     strcpy(current->pt->color, temp.color);
     current->pt->pt = NULL;
+    }
 }
 
 //deletes first card from linked list; receives linked list as input; returns head pointer to that list without the first node
@@ -71,6 +75,7 @@ card deleteFirstNode(card ** head) {
 //deletes card from any location in linked list; receives linked list and the specific position of a card to be deleted; no output necessary
 void deleteNode(card **head, int pos) {
     card* temp = *head;   //temp pointer to head node
+    if(temp != NULL){ //Fix for warning: dereference of NULL
     card* prev = NULL;
     if(pos == 0) {
         *head = temp->pt;
@@ -84,6 +89,7 @@ void deleteNode(card **head, int pos) {
     }
     prev->pt = temp->pt;
     free(temp);  //frees memory
+    }
 }
 
 //DECK FUNCTIONS
